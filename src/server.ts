@@ -1,12 +1,7 @@
-import express, { Request, Response } from 'express'
+import config from './config'
+import app from './app';
 
-
-const app = express()
-const port = 3000
-
-app.get('/', (req: Request, res) => {
-    res.send('Welcome to the Vehicle Rental System !')
-})
+const port = config.port;
 
 app.listen(port, () => {
     console.log(`Vehicle Rental System Server is running on port ${port}`)
