@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import config from './config';
 import initDB from './config/db';
 import { authRoutes } from './modules/auth/auth.routes';
+import { vehiclesRoutes } from './modules/vehicles/vehicles.routes';
 
 const app = express();
 
@@ -21,10 +21,11 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Welcome to the Vehicle Rental System !')
 })
 
-
 // auth routes
 app.use('/api/v1/auth', authRoutes);
 
+// vehicles routes
+app.use('/api/v1/vehicles', vehiclesRoutes);
 
 // deafult 404 route
 app.use((req: Request, res: Response) => {

@@ -47,3 +47,7 @@ const auth = (...allowedRoles: string[]) => {
         }  
     };
 }
+
+export const authMiddleware = {
+    auth,
+};
