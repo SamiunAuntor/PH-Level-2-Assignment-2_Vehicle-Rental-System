@@ -73,7 +73,7 @@ const getVehicleById = async (req: Request, res: Response) => {
 
 const updateVehicle = async (req: Request, res: Response) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const payload = req.body;
 
         const result = await vehiclesServices.updateVehicle(parseInt(id), payload);
@@ -83,7 +83,7 @@ const updateVehicle = async (req: Request, res: Response) => {
             message: "Vehicle updated successfully",
             data: result,
         });
-        
+
     }
     catch (error: any) {
         res.status(400).json({
@@ -93,9 +93,39 @@ const updateVehicle = async (req: Request, res: Response) => {
     }
 };
 
+const deleteVehicle = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({
+                success: false,
+                message: "Vehicle ID is required",
+                error: "Vehicle ID is required",
+            });
+        }
+
+        const result = await vehiclesServices.deleteVehicle(parseInt(id));
+
+        res.status(200).json({
+            success: true,
+            message: "Vehicle deleted successfully",
+        });
+
+    }
+    catch (error: any) {
+        res.status(400).json({
+            success: false,
+            message: error.message,
+            error: error,
+        });
+    }
+};
+
 export const vehicleController = {
     createVehicle,
     getAllVehicles,
     getVehicleById,
     updateVehicle,
+    deleteVehicle,
 };
