@@ -4,7 +4,6 @@ import { vehiclesServices } from "./vehicles.services";
 const createVehicle = async (req: Request, res: Response) => {
     try {
         const vehicleData = req.body;
-
         const result = await vehiclesServices.createVehicle(vehicleData);
 
         res.status(201).json({
@@ -24,33 +23,28 @@ const getAllVehicles = async (req: Request, res: Response) => {
     try {
         const vehicles = await vehiclesServices.getAllVehicles();
 
-        if (vehicles.length === 0) {
-            return res.status(200).json({
-                success: true,
-                message: "No vehicles found",
-                data: [],
-            });
-        }
-
         res.status(200).json({
             success: true,
-            message: "Vehicles retrieved successfully",
+            message: vehicles.length
+                ? "Vehicles retrieved successfully"
+                : "No vehicles found",
             data: vehicles,
         });
-    }
-    catch (error: any) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Error retrieving vehicles",
+            errors: error.message,
         });
     }
 };
 
 const getVehicleById = async (req: Request, res: Response) => {
     try {
-        const result = await vehiclesServices.getVehicleById(parseInt(req.params.id));
+        const id = parseInt(req.params.id);
+        const vehicle = await vehiclesServices.getVehicleById(id);
 
-        if (!result) {
+        if (!vehicle) {
             return res.status(404).json({
                 success: false,
                 message: "Vehicle not found",
@@ -60,64 +54,79 @@ const getVehicleById = async (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             message: "Vehicle retrieved successfully",
-            data: result,
+            data: vehicle,
         });
-    }
-    catch (error: any) {
+    } catch (error: any) {
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Error retrieving vehicle",
+            errors: error.message,
         });
     }
 };
 
 const updateVehicle = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
+        const id = parseInt(req.params.id);
         const payload = req.body;
 
-        const result = await vehiclesServices.updateVehicle(parseInt(id), payload);
+        if (Object.keys(payload).length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "No fields to update",
+            });
+        }
+
+        const updatedVehicle = await vehiclesServices.updateVehicle(id, payload);
 
         res.status(200).json({
             success: true,
             message: "Vehicle updated successfully",
-            data: result,
+            data: updatedVehicle,
         });
-
-    }
-    catch (error: any) {
+    } catch (error: any) {
+        if (error.message === "Vehicle not found") {
+            return res.status(404).json({
+                success: false,
+                message: error.message,
+            });
+        }
         res.status(400).json({
             success: false,
-            message: error.message,
+            message: "Vehicle update failed",
+            errors: error.message,
         });
     }
 };
 
 const deleteVehicle = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-
-        if (!id) {
-            return res.status(400).json({
-                success: false,
-                message: "Vehicle ID is required",
-                error: "Vehicle ID is required",
-            });
-        }
-
-        const result = await vehiclesServices.deleteVehicle(parseInt(id));
+        const id = parseInt(req.params.id);
+        await vehiclesServices.deleteVehicle(id);
 
         res.status(200).json({
             success: true,
             message: "Vehicle deleted successfully",
         });
+    } catch (error: any) {
+        if (error.message === "Vehicle not found") {
+            return res.status(404).json({
+                success: false,
+                message: error.message,
+            });
+        }
 
-    }
-    catch (error: any) {
-        res.status(400).json({
+        if (error.message === "Cannot delete vehicle with active bookings") {
+            return res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+        }
+
+        res.status(500).json({
             success: false,
-            message: error.message,
-            errors: error,
+            message: "Vehicle deletion failed",
+            errors: error.message,
         });
     }
 };
