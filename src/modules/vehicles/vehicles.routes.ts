@@ -11,7 +11,10 @@ router.post("/", authMiddleware.auth("admin"), vehicleController.createVehicle);
 router.get("/", vehicleController.getAllVehicles);
 
 // get a specific vehicle by ID (public)
-router.get("/:id", vehicleController.getVehicleById);   
+router.get("/:id", vehicleController.getVehicleById);
+
+// update a vehicle (admin only) 
+router.put("/:id", authMiddleware.auth("admin"), vehicleController.updateVehicle);
 
 export const vehiclesRoutes = router;
 

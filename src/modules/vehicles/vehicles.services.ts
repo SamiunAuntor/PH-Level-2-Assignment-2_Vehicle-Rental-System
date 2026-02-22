@@ -47,8 +47,48 @@ const getVehicleById = async (id: number) => {
     return result.rows[0];
 };
 
+// Service to update vehicle
+const updateVehicle = async (id: number, payload: any) => {
+    if (!id) {
+        throw new Error("Vehicle ID is required");
+    }
+
+    const fields: string[] = [];
+    const values: any[] = [];
+    let index = 1;
+
+    for (const key in payload) {
+        fields.push(`${key} = $${index}`);
+        values.push(payload[key]);
+        index++;
+    }
+
+    if (fields.length === 0) {
+        throw new Error("No fields to update");
+    }
+
+    const query = `
+    UPDATE vehicles
+    SET ${fields.join(", ")}
+    WHERE id = $${index}
+    RETURNING *
+  `;
+
+    values.push(id);
+
+    const result = await pool.query(query, values);
+
+    if (result.rows.length === 0) {
+        throw new Error("Vehicle not found");
+    }
+
+    return result.rows[0];
+
+};
+
 export const vehiclesServices = {
     createVehicle,
     getAllVehicles,
     getVehicleById,
+    updateVehicle,
 };
