@@ -8,6 +8,8 @@ const router = Router();
 
 router.get('/', authMiddleware.auth("admin"), usersController.getAllUsers);
 
+router.delete('/:id', authMiddleware.auth("admin"), usersController.deleteUser);
+
 
 
 export const usersRoutes = router;
