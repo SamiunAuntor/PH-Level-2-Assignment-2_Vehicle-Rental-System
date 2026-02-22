@@ -117,7 +117,7 @@ const deleteVehicle = async (req: Request, res: Response) => {
         res.status(400).json({
             success: false,
             message: error.message,
-            error: error,
+            errors: error,
         });
     }
 };
