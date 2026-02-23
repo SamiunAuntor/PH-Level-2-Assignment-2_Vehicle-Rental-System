@@ -41,7 +41,7 @@ const getAllVehicles = async (req: Request, res: Response) => {
 
 const getVehicleById = async (req: Request, res: Response) => {
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as any);
         const vehicle = await vehiclesServices.getVehicleById(id);
 
         if (!vehicle) {
@@ -67,7 +67,7 @@ const getVehicleById = async (req: Request, res: Response) => {
 
 const updateVehicle = async (req: Request, res: Response) => {
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as any);
         const payload = req.body;
 
         if (Object.keys(payload).length === 0) {
@@ -101,7 +101,7 @@ const updateVehicle = async (req: Request, res: Response) => {
 
 const deleteVehicle = async (req: Request, res: Response) => {
     try {
-        const id = parseInt(req.params.id);
+        const id = parseInt(req.params.id as any);
         await vehiclesServices.deleteVehicle(id);
 
         res.status(200).json({

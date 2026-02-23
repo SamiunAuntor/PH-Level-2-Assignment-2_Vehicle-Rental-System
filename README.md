@@ -3,7 +3,7 @@
 ## 🔗 Project Name & Live URL
 
 **Project**: Vehicle Rental System (Backend API)  
-**Live URL (demo)**: `https://vehicle-rental-system-demo.example.com` *(dummy placeholder URL)*
+**Live URL**: `https://vehicle-rental-system-server-xi.vercel.app/`
 
 ---
 
@@ -51,8 +51,8 @@ This project is suitable as a learning-grade or production-ready foundation for 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/vehicle-rental-system.git
-cd vehicle-rental-system
+git clone https://github.com/SamiunAuntor/PH-Level-2-Assignment-2_Vehicle-Rental-System.git
+cd PH-Level-2-Assignment-2_Vehicle-Rental-System
 ```
 
 ### 2. Install Dependencies
