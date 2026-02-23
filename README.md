@@ -3,7 +3,7 @@
 ## 🔗 Project Name & Live URL
 
 **Project**: Vehicle Rental System (Backend API)  
-**Live URL**: `https://vehicle-rental-system-server-xi.vercel.app/`
+**Live URL**: [https://vehicle-rental-system-server-xi.vercel.app/](https://vehicle-rental-system-server-xi.vercel.app/)
 
 ---
 
