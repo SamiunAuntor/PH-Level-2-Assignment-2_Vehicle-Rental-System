@@ -2,7 +2,7 @@ import { pool } from "../../config/db";
 
 // auto-return helper function using node-cron
 export const autoReturnExpiredBookings = async () => {
-    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const today = new Date().toISOString().split('T')[0];
 
     // Get all active bookings that have passed their end date
     const expiredBookings = await pool.query(
@@ -102,7 +102,6 @@ const createBooking = async (payload: any) => {
     return booking;
 };
 
-
 // get all bookings (admin = all, customer = his all booking)
 const getAllBookings = async (loggedInUser: any) => {
     // run auto-return function
@@ -136,8 +135,8 @@ const getAllBookings = async (loggedInUser: any) => {
                 id: row.id,
                 customer_id: row.customer_id,
                 vehicle_id: row.vehicle_id,
-                rent_start_date: row.rent_start_date,
-                rent_end_date: row.rent_end_date,
+                rent_start_date: row.rent_start_date.toISOString().split('T')[0],
+                rent_end_date: row.rent_end_date.toISOString().split('T')[0],
                 total_price: row.total_price,
                 status: row.status,
                 customer: {
@@ -175,8 +174,8 @@ const getAllBookings = async (loggedInUser: any) => {
         data: result.rows.map(row => ({
             id: row.id,
             vehicle_id: row.vehicle_id,
-            rent_start_date: row.rent_start_date,
-            rent_end_date: row.rent_end_date,
+            rent_start_date: row.rent_start_date.toISOString().split('T')[0],
+            rent_end_date: row.rent_end_date.toISOString().split('T')[0],
             total_price: row.total_price,
             status: row.status,
             vehicle: {
@@ -187,7 +186,6 @@ const getAllBookings = async (loggedInUser: any) => {
         }))
     };
 };
-
 
 // update booking status
 const updateBookingStatus = async (
@@ -229,6 +227,10 @@ const updateBookingStatus = async (
     );
 
     const updatedBooking = updatedResult.rows[0];
+
+    // normalize date format for response
+    updatedBooking.rent_start_date = updatedBooking.rent_start_date.toISOString().split('T')[0];
+    updatedBooking.rent_end_date = updatedBooking.rent_end_date.toISOString().split('T')[0];
 
     // update logic
     if (status === "cancelled" || status === "returned") {
