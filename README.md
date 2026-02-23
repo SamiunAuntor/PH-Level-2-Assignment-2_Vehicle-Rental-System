@@ -253,3 +253,6 @@ PH-Level-2-Assignment-2_Vehicle-Rental-System/
 
 ---
 
+## 📚 Additional Resources
+- **[API Reference](API_REFERENCE.md)** - Detailed endpoint documentation with 
+request/response examples
