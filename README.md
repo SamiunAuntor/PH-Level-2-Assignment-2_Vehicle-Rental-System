@@ -118,6 +118,46 @@ This structure makes the codebase maintainable, testable, and easy to extend.
 
 ---
 
+## 🗂️ Folder Structure
+
+```bash
+PH-Level-2-Assignment-2_Vehicle-Rental-System/
+├─ src/
+│  ├─ app.ts
+│  ├─ server.ts
+│  ├─ config/
+│  │  ├─ db.ts           # Database connection and configuration
+│  │  └─ index.ts        # Config entry/export
+│  ├─ middlewares/
+│  │  └─ auth.ts         # Authentication & authorization middleware
+│  ├─ modules/
+│  │  ├─ auth/
+│  │  │  ├─ auth.controller.ts
+│  │  │  ├─ auth.routes.ts
+│  │  │  └─ auth.services.ts
+│  │  ├─ bookings/
+│  │  │  ├─ bookings.controller.ts
+│  │  │  ├─ bookings.routes.ts
+│  │  │  └─ bookings.services.ts
+│  │  ├─ users/
+│  │  │  ├─ users.controller.ts
+│  │  │  ├─ users.routes.ts
+│  │  │  └─ users.services.ts
+│  │  └─ vehicles/
+│  │     ├─ vehicles.controller.ts
+│  │     ├─ vehicles.routes.ts
+│  │     └─ vehicles.services.ts
+│  └─ utils/
+│     └─ cron.ts         # Scheduled/cron-related utilities
+├─ API_REFERENCE.md       # Detailed API documentation
+├─ package.json
+├─ package-lock.json
+├─ tsconfig.json
+└─ README.md
+```
+
+---
+
 ## 📊 Database Tables
 
 ### Users
@@ -213,7 +253,3 @@ This structure makes the codebase maintainable, testable, and easy to extend.
 
 ---
 
-## 📚 Additional Resources
-
-- **[API Reference](API_REFERENCE.md)** - Detailed endpoint documentation with request/response examples
-- **[Submission Guide](SUBMISSION_GUIDE.md)** - Assignment submission requirements and deadlines
